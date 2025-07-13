@@ -71,5 +71,5 @@ jobs:
         with:
           app-name: 'totos-api'
           slot-name: 'Production'
-          package: release
+          package: release.zip
           
