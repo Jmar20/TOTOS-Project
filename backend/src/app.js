@@ -17,10 +17,16 @@ app.use(cookieParser());
 
 // Configuración de CORS para permitir solicitudes desde un origen específico
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://jmar20.github.io'], // Acepta solo solicitudes desde estos dominios
+    origin: [
+        'http://localhost:5173', 
+        'http://localhost:3000',
+        'https://jmar20.github.io',
+        'https://orange-mud-04191e70f.2.azurestaticapps.net'
+    ], // Acepta solicitudes desde estos dominios
     credentials: true,  // Permite el uso de cookies y credenciales
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
     sameSite: 'none' // Permitir el uso de cookies en solicitudes entre diferentes orígenes
-
 }));
 
 // Middleware para registrar solicitudes

@@ -1,5 +1,5 @@
 import { NavItem } from './NavItem';
-import axios from 'axios';
+import apiClient from '../config/apiClient.js';
 import { useNavigate } from 'react-router-dom';
 
 const navItems = ["Clientes", "Ordenes", "Inventario", "Informes"];
@@ -9,11 +9,10 @@ export function Navbar() {
 
     const handleLogout = async () => {
         try {
-            await axios.post('https://pyfjs.onrender.com/api/auth/logout', {}, {
-                withCredentials: true
-            });
-
-            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/; domain=pyfjs.onrender.com; Secure; HttpOnly; SameSite=None";
+            await apiClient.post('/api/auth/logout');
+            
+            // Limpiar cookies localmente
+            document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
 
             navigate('/login'); 
         } catch (error) {
