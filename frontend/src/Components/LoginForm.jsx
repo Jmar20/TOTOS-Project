@@ -1,6 +1,7 @@
 import '../Styles/SForms.css';
 import { Helmet } from 'react-helmet';
-import axios from 'axios';
+import apiClient from '../config/apiClient.js';
+import { API_ENDPOINTS } from '../config/api.js';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -18,11 +19,9 @@ export function LoginForm() {
         setLoading(true);
 
         try {
-            const response = await axios.post('https://pyfjs.onrender.com/api/auth/login', {
+            const response = await apiClient.post('/api/auth/login', {
                 email,
                 password
-            }, {
-                withCredentials: true 
             });
 
             console.log('Inicio de sesión exitoso:', response.data);
@@ -40,11 +39,11 @@ export function LoginForm() {
         setError('');
 
         try {
-            await axios.post('https://pyfjs.onrender.com/api/auth/solicitarCambioContrasena', {
+            await apiClient.post('/api/auth/solicitarCambioContrasena', {
                 email
             });
             setInfoMessage('Una clave de acceso ha sido enviada a tu correo electrónico.');
-            navigate('/#/recuperar');
+            navigate('/recuperar');
         } catch (err) {
             setError(err.response?.data?.message || 'Error de red o en el servidor');
             console.error('Error al solicitar el cambio de contraseña:', err);
