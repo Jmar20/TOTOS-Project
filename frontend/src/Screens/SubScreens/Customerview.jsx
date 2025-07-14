@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import apiClient from '../../config/apiClient.js';
 import { Helmet } from 'react-helmet';
 import '../../Styles/Modals.css';
 
@@ -20,7 +20,7 @@ export function Customerview() {
 
     const fetchCustomers = async () => {
         try {
-            const response = await axios.get('https://pyfjs.onrender.com/api/client/clients');
+            const response = await apiClient.get('/api/client/clients');
             setCustomers(response.data);
         } catch (error) {
             console.error('Error fetching customers:', error);
@@ -45,7 +45,7 @@ export function Customerview() {
     const handleDeleteCustomer = async (id) => {
         if (window.confirm('¿Estás seguro de eliminar este cliente?')) {
             try {
-                await axios.delete(`https://pyfjs.onrender.com/api/client/clients/${id}`);
+                await apiClient.delete(`/api/client/clients/${id}`);
                 fetchCustomers();
             } catch (error) {
                 console.error('Error deleting customer:', error);
@@ -62,13 +62,13 @@ export function Customerview() {
         try {
             if (selectedCustomer) {
                 // Update customer
-                await axios.put(
-                    `https://pyfjs.onrender.com/api/client/clients/${selectedCustomer._id}`,
+                await apiClient.put(
+                    `/api/client/clients/${selectedCustomer._id}`,
                     formData
                 );
             } else {
                 // Create customer
-                await axios.post('https://pyfjs.onrender.com/api/client/clients', formData);
+                await apiClient.post('/api/client/clients', formData);
             }
 
             fetchCustomers();

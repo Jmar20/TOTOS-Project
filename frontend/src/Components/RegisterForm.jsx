@@ -1,6 +1,6 @@
 import '../Styles/SForms.css';
 import { Helmet } from 'react-helmet';
-import axios from 'axios'; 
+import apiClient from '../config/apiClient.js';
 import { useState } from 'react'; 
 import { useNavigate } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ export function RegisterForm() {
     }
 
     try {
-      const response = await axios.post('https://pyfjs.onrender.com/api/auth/register', {
+      const response = await apiClient.post('/api/auth/register', {
         email,    
         password
       });

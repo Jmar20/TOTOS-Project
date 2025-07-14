@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import apiClient from "../../config/apiClient.js";
 
 export function Orderviews() {
     const [orders, setOrders] = useState([]);
@@ -21,7 +21,7 @@ export function Orderviews() {
 
     const fetchOrders = async () => {
         try {
-            const response = await axios.get('https://pyfjs.onrender.com/api/pedido/pedidos', {
+            const response = await apiClient.get('/api/pedido/pedidos', {
                 params: { estado: estadoFilter },
                 withCredentials: true,
             });
@@ -33,7 +33,7 @@ export function Orderviews() {
 
     const fetchMandiles = async () => {
         try {
-            const response = await axios.get('https://pyfjs.onrender.com/api/mandil/mandiles', {
+            const response = await apiClient.get('/api/mandil/mandiles', {
                 params: { estado: false },
                 withCredentials: true,
             });
@@ -54,11 +54,11 @@ export function Orderviews() {
 
             if (isEditing) {
                 // Actualizar el pedido
-                await axios.put(`https://pyfjs.onrender.com/api/pedido/pedidos/${selectedOrder._id}`, newPedido, { withCredentials: true });
+                await apiClient.put(`/api/pedido/pedidos/${selectedOrder._id}`, newPedido, { withCredentials: true });
                 alert('Pedido editado exitosamente');
             } else {
                 // Crear un nuevo pedido
-                await axios.post('https://pyfjs.onrender.com/api/pedido/pedidos', newPedido, { withCredentials: true });
+                await apiClient.post('/api/pedido/pedidos', newPedido, { withCredentials: true });
                 alert('Pedido creado exitosamente');
             }
 
@@ -85,7 +85,7 @@ export function Orderviews() {
 
     const handleSearch = async () => {
         try {
-            const response = await axios.get('https://pyfjs.onrender.com/api/pedido/pedidos/search/ruc', {
+            const response = await apiClient.get('/api/pedido/pedidos/search/ruc', {
                 params: { ruc: searchTerm },
                 withCredentials: true,
             });
@@ -97,7 +97,7 @@ export function Orderviews() {
 
     const handleFilterByEstado = async () => {
         try {
-            const response = await axios.get('https://pyfjs.onrender.com/api/pedido/pedidos/search/estado', {
+            const response = await apiClient.get('/api/pedido/pedidos/search/estado', {
                 params: { estado: estadoFilter },
                 withCredentials: true,
             });
@@ -109,7 +109,7 @@ export function Orderviews() {
 
     const handleGeneratePDF = async (id) => {
         try {
-            const response = await axios.get(`https://pyfjs.onrender.com/api/pedido/pedidos/${id}/pdf`, {
+            const response = await apiClient.get(`/api/pedido/pedidos/${id}/pdf`, {
                 responseType: 'blob',
                 withCredentials: true,
             });
@@ -126,7 +126,7 @@ export function Orderviews() {
 
     const handleDeleteOrder = async (id) => {
         try {
-            await axios.delete(`https://pyfjs.onrender.com/api/pedido/pedidos/${id}`, { withCredentials: true });
+            await apiClient.delete(`/api/pedido/pedidos/${id}`, { withCredentials: true });
             alert('Pedido eliminado exitosamente');
             fetchOrders();
         } catch (error) {
@@ -255,3 +255,4 @@ export function Orderviews() {
 }
 
 export default Orderviews;
+
