@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import apiClient from "../../config/apiClient.js";
 import { PieChart, Pie, Cell, Tooltip, Legend, LineChart, Line, XAxis, YAxis, BarChart, Bar } from 'recharts'; 
 import '../../Styles/SDashboard.css';
 
@@ -19,7 +19,7 @@ export function Reportsview() {
 
     const fetchMandilDataTrue = async () => {
         try {
-            const response = await axios.get('https://pyfjs.onrender.com/api/mandil/mandiles', { params: { estado: 'true' }, withCredentials: true });
+            const response = await apiClient.get('/api/mandil/mandiles', { params: { estado: 'true' }, withCredentials: true });
             const mandiles = response.data;
 
             const mandilCounts = mandiles.reduce((acc, mandil) => {
@@ -40,7 +40,7 @@ export function Reportsview() {
 
     const fetchMandilDataAll = async () => {
         try {
-            const response = await axios.get('https://pyfjs.onrender.com/api/mandil/mandiles', { withCredentials: true });
+            const response = await apiClient.get('/api/mandil/mandiles', { withCredentials: true });
             const mandiles = response.data;
     
             // Filtrar mandiles con estado true
@@ -65,7 +65,7 @@ export function Reportsview() {
     // Función para obtener la cantidad de pedidos por mes
     const fetchPedidosPorMes = async () => {
         try {
-            const response = await axios.get('https://pyfjs.onrender.com/api/pedido/pedidos', { withCredentials: true });
+            const response = await apiClient.get('/api/pedido/pedidos', { withCredentials: true });
             const pedidos = response.data;
 
             // Agrupar pedidos por mes
@@ -89,7 +89,7 @@ export function Reportsview() {
     // Función para obtener el estado de los pedidos por RUC
     const fetchPedidosPorRuc = async () => {
         try {
-            const response = await axios.get('https://pyfjs.onrender.com/api/pedido/pedidos', { withCredentials: true });
+            const response = await apiClient.get('/api/pedido/pedidos', { withCredentials: true });
             const pedidos = response.data;
 
             // Agrupar pedidos por RUC y estado

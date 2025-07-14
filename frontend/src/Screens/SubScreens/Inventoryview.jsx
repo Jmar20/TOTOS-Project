@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import apiClient from "../../config/apiClient.js";
 import { Helmet } from "react-helmet";
 import '../../Styles/Modals.css';
 
@@ -30,7 +30,7 @@ export function Inventoryview() {
             const params = {};
             if (estadoFilter) params.estado = estadoFilter;
 
-            const response = await axios.get('https://pyfjs.onrender.com/api/mandil/mandiles', {
+            const response = await apiClient.get('/api/mandil/mandiles', {
                 params,
                 withCredentials: true,
             });
@@ -52,7 +52,7 @@ export function Inventoryview() {
 
     const handleDeleteItem = async (id) => {
         try {
-            await axios.delete(`https://pyfjs.onrender.com/api/mandil/mandiles/${id}`, { withCredentials: true });
+            await apiClient.delete(`/api/mandil/mandiles/${id}`, { withCredentials: true });
             fetchInventory();
         } catch (error) {
             console.error("Error deleting item", error);
@@ -69,7 +69,7 @@ export function Inventoryview() {
         if (selectedItem) {
             // Editar mandil
             try {
-                await axios.put(`https://pyfjs.onrender.com/api/mandil/mandiles/${selectedItem._id}`, mandilData, { withCredentials: true });
+                await apiClient.put(`/api/mandil/mandiles/${selectedItem._id}`, mandilData, { withCredentials: true });
                 fetchInventory();
                 resetForm();
             } catch (error) {
@@ -78,7 +78,7 @@ export function Inventoryview() {
         } else {
             // Crear mandil
             try {
-                await axios.post('https://pyfjs.onrender.com/api/mandil/mandiles', mandilData, { withCredentials: true });
+                await apiClient.post('/api/mandil/mandiles', mandilData, { withCredentials: true });
                 fetchInventory();
                 resetForm();
             } catch (error) {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import apiClient from '../config/apiClient.js';
 import { useNavigate } from 'react-router-dom';
 
 export function Recuperar() {
@@ -15,7 +15,7 @@ export function Recuperar() {
         setError('');
 
         try {
-            const response = await axios.post('https://pyfjs.onrender.com/api/auth/solicitarCambioContrasena', {
+            const response = await apiClient.post('/api/auth/solicitarCambioContrasena', {
                 email,
             });
             setMessage(response.data.message || 'Una clave de acceso ha sido enviada a tu correo electrónico.');
@@ -29,7 +29,7 @@ export function Recuperar() {
         setError('');
 
         try {
-            const response = await axios.post('https://pyfjs.onrender.com/api/auth/cambiarContrasena', {
+            const response = await apiClient.post('/api/auth/cambiarContrasena', {
                 email,
                 nuevaContrasena,
                 claveAccesoUser,
